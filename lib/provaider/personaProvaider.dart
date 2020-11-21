@@ -26,45 +26,27 @@ class PersonaProvaider {
     final respData = json.decode(resp.body);
     return respData["secure_url"];
   }
-  /*enviar url de la imagen a azure*/
-  Future<double> EnviarDatos(ModeloPersona persona) async {
-    final endPoint =
-        "https://southcentralus.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=false&returnFaceAttributes=age,gender&recognitionModel=recognition_01&returnRecognitionModel=false&detectionModel=detection_01";
-    final response = await http.post(endPoint,
-        headers: {
-          'Content-Type': 'application/json',
-          'Ocp-Apim-Subscription-Key': '4d7929702c5d4c7daf0fdb3b7c04ea96'
-        },
-        body: jsonEncode({'url': persona.url}));
 
-    final parsed = json.decode(response.body);
-    double edad = parsed[0]["faceAttributes"]["age"];
+  Future<int> enviarDatos(ModeloPersona persona) async {
+    final endPoint = "https://age-detector.herokuapp.com/";
+    final response = await http.post(endPoint, body: {"url": persona.url});
+    final decode = json.decode(response.body);
+
+    int age = decode["age"];
     if (response.statusCode == 200) {
-      return edad;
+      return age;
     } else {
       return -1;
     }
   }
 
-
-
-
-  
-  Future<bool> almacenarDatosPersona(ModeloPersona persona) async{
-    final url="";
-    final response=await http.post(url,body: {
-      "url": persona.url,
-      "edad":persona.edad
-    });
-    final decode=json.decode(response.body);
-    print(decode);
-    if(response.statusCode==200){
-      return true;
-    }else{
-      return false;
+  Future<List<ModeloPersona>> obtenerPersonas() async {
+    final endPoint = "https://age-detector.herokuapp.com/accepted";
+    final response = await http.get(endPoint);
+    if (response.statusCode == 200) {
+      return modeloPersonaFromJson(response.body);
+    } else {
+      return null;
     }
-    
   }
-
-  
 }

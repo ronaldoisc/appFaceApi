@@ -1,12 +1,12 @@
 import 'dart:io';
 
 import 'package:faceapi/modelo/modeloPersona.dart';
-import 'package:faceapi/paginas/personasAceptadas.dart';
 import 'package:faceapi/provaider/personaProvaider.dart';
 import 'package:faceapi/widgets/validarFoto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
 class PaginaAnalizarFoto extends StatefulWidget {
   @override
   _PaginaAnalizarFotoState createState() => _PaginaAnalizarFotoState();
@@ -17,7 +17,7 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
   final personaProvaider = new PersonaProvaider();
   final validarFoto = new Validar();
   final formkey = GlobalKey<FormState>();
-    File foto;
+  File foto;
   var _cargando = false;
   @override
   Widget build(BuildContext context) {
@@ -40,24 +40,17 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
         key: formkey,
         child: Column(
           children: [
-          //_titulo(),
-      //    _mostrar(),
-          // _foto(),
-           _titulo(),
-          // _mostrar()
-           _mostrarFoto(),
-           _espacio(),
-           _loanding(),
-           _botonEnviar(),
-      
-           
-      
+            _titulo(),
+            _mostrarFoto(),
+            _espacio(),
+            _loanding(),
+            _botonEnviar(),
           ],
         ),
       ),
-    
     );
   }
+
   _espacio() {
     return SizedBox(
       height: 10,
@@ -78,10 +71,9 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
       return Container();
     }
   }
- 
 
   _titulo() {
-     return Padding(
+    return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Text(
         "¡Detectando menores de edad!",
@@ -90,6 +82,7 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
       ),
     );
   }
+
   _botonEnviar() {
     return RaisedButton(
         child: Container(
@@ -105,10 +98,17 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
         elevation: 0.0,
         color: Theme.of(context).primaryColor,
         textColor: Colors.white,
+      
+        
         onPressed: !_cargando ? () => _sumit() : null);
   }
 
   _sumit() async {
+    if(foto==null){
+      _showAlertDialog();
+      return;
+    }
+
     if (_cargando) return;
 
     final isValid = formkey.currentState.validate();
@@ -123,23 +123,15 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
       modeloPersona.url = await personaProvaider.subirImagen(foto);
     }
     if (modeloPersona.url != null) {
-      final edad = await personaProvaider.EnviarDatos(modeloPersona);
-
+      final edad = await personaProvaider.enviarDatos(modeloPersona);
+      print(edad);
       setState(() {
         _cargando = false;
       });
-      modeloPersona.edad = edad;
       validarFoto.validarFoto(context, edad);
-
-      // final res=await personaProvaider.almacenarDatosPersona(modeloPersona);
-      /* if(res==true){
-        print("si");
-      }else{
-        print("no");
-      }*/
-
     }
   }
+
   Widget _mostrarFoto() {
     if (modeloPersona.url != null) {
       return FadeInImage(
@@ -153,31 +145,12 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
         return Image.file(foto,
             fit: BoxFit.cover, height: 500.0, width: double.infinity);
       }
-      return Image.asset('assets/no-image.png');
-    }
-  }
-  _foto()async{
-  var fotico=await ImagePicker.pickImage(source: ImageSource.camera,imageQuality: 10);
-  
-  setState(() {
-    foto=fotico;
-    
-
-  });
-   Navigator.of(context).pop();
-  
-   //Navigator.of(context).pop();
-  }
-  _mostrar(){
-     if (foto != null) {
-      return Image.file(foto, width: 500, height: 500);
-    } else {
-      return Text("Please select an image");
+      return Container(child: Image.asset("assets/no-image.png"));
+      //return Image.asset('assets/no-image.png');
     }
   }
 
-  
-   _tomarFoto() async {
+  _tomarFoto() async {
     setState(() {
       procesarFoto(ImageSource.camera);
     });
@@ -188,7 +161,7 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
   }
 
   procesarFoto(ImageSource origen) async {
-    foto = await ImagePicker.pickImage(source: origen,imageQuality: 50);
+    foto = await ImagePicker.pickImage(source: origen, imageQuality: 50);
 
     if (foto != null) {
       modeloPersona.url = null;
@@ -196,5 +169,22 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
 
     setState(() {});
   }
-  
+
+  void _showAlertDialog() {
+    showDialog(
+      context: context,
+      builder: (buildcontext) {
+        return AlertDialog(
+          title: Text("Error"),
+          content: Text("Debe de tomar una fotografia,¡Intentelo nuevamente!"),
+          actions: <Widget>[
+            RaisedButton(
+              child: Text("CERRAR", style: TextStyle(color: Colors.white),),
+              onPressed: (){ Navigator.of(context).pop(); },
+            )
+          ],
+        );
+      }
+    );
+  }
 }

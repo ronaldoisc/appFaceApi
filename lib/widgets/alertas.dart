@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tts/tts.dart';
 
 class Alertas {
-  void showDialogMessage(BuildContext context,IconData icono,Color color, String title,double edad, subtitle) {
+  void showDialogMessage(BuildContext context,IconData icono,Color color, String title,int edad, subtitle) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
