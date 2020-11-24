@@ -41,6 +41,23 @@ class Alertas {
       },
     );
   }
+  void showAlertDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (buildcontext) {
+        return AlertDialog(
+          title: Text("Error"),
+          content: Text("Debe de tomar una fotografia,¡Intentelo nuevamente!"),
+          actions: <Widget>[
+            RaisedButton(
+              child: Text("CERRAR", style: TextStyle(color: Colors.white),),
+              onPressed: (){ Navigator.of(context).pop(); },
+            )
+          ],
+        );
+      }
+    );
+  }
   speak(String texto) async {
   Tts.speak(texto);
 }

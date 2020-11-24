@@ -10,7 +10,7 @@ validarFoto(BuildContext context,int edad) {
           "Upps! Eres menor de edad :( ", edad, "¡no tienes acceso!");
 
           alerta.speak("Por cuestiones de seguridad no puedes ingresar");
-    } else if (edad > 18 && edad < 60) {
+    } else if (edad >= 18) {
       alerta.showDialogMessage(context, Icons.info_outline, Colors.green,
           "Perfecto! eres mayor de edad :)  ", edad, "¡tienes acceso!");
           alerta.speak("Si tienes acceso, adelante");

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:faceapi/modelo/modeloPersona.dart';
 import 'package:faceapi/provaider/personaProvaider.dart';
+import 'package:faceapi/widgets/alertas.dart';
 import 'package:faceapi/widgets/validarFoto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
   ModeloPersona modeloPersona = new ModeloPersona();
   final personaProvaider = new PersonaProvaider();
   final validarFoto = new Validar();
+  final alertas=new Alertas();
   final formkey = GlobalKey<FormState>();
   File foto;
   var _cargando = false;
@@ -105,7 +107,7 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
 
   _sumit() async {
     if(foto==null){
-      _showAlertDialog();
+     alertas.showAlertDialog(context);
       return;
     }
 
@@ -170,21 +172,5 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
     setState(() {});
   }
 
-  void _showAlertDialog() {
-    showDialog(
-      context: context,
-      builder: (buildcontext) {
-        return AlertDialog(
-          title: Text("Error"),
-          content: Text("Debe de tomar una fotografia,¡Intentelo nuevamente!"),
-          actions: <Widget>[
-            RaisedButton(
-              child: Text("CERRAR", style: TextStyle(color: Colors.white),),
-              onPressed: (){ Navigator.of(context).pop(); },
-            )
-          ],
-        );
-      }
-    );
-  }
+  
 }
