@@ -25,7 +25,7 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("AgeSecurityApp"),
+        title: Text("AppFaceApi"),
         leading: Icon(Icons.face),
         actions: <Widget>[
           IconButton(
