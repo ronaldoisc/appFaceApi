@@ -2,13 +2,13 @@ import 'package:faceapi/modelo/modeloPersona.dart';
 import 'package:faceapi/provaider/personaProvaider.dart';
 import 'package:flutter/material.dart';
 
-class PaginaPersonasAceptadas extends StatefulWidget {
+class AcceptedPeoplePage extends StatefulWidget {
   @override
-  _PaginaPersonasAceptadasState createState() =>
-      _PaginaPersonasAceptadasState();
+  _AcceptedPeoplePageState createState() =>
+      _AcceptedPeoplePageState();
 }
 
-class _PaginaPersonasAceptadasState extends State<PaginaPersonasAceptadas> {
+class _AcceptedPeoplePageState extends State<AcceptedPeoplePage> {
   final personaProvaider = new PersonaProvaider();
 
   @override

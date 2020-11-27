@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:faceapi/modelo/modeloPersona.dart';
+import 'package:faceapi/pages/personasAceptadas.dart';
 import 'package:faceapi/provaider/personaProvaider.dart';
 import 'package:faceapi/widgets/alertas.dart';
 import 'package:faceapi/widgets/validarFoto.dart';
@@ -7,13 +8,28 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-class PaginaAnalizarFoto extends StatefulWidget {
+class AnalyzeImage extends StatefulWidget {
+  final String imagePath;
+
   @override
-  _PaginaAnalizarFotoState createState() => _PaginaAnalizarFotoState();
+  _AnalyzeImageState createState() => _AnalyzeImageState();
+
+  const AnalyzeImage({Key key, this.imagePath = ""}) : super(key: key);
 }
 
-class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
-  ModeloPersona modeloPersona = new ModeloPersona();
+class _AnalyzeImageState extends State<AnalyzeImage> {
+  final ImagePicker _picker = ImagePicker();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.imagePath != "") {
+      foto = File(widget.imagePath);
+      setState(() {});
+    }
+  }
+
+  ModeloPersona person = new ModeloPersona();
   final personaProvaider = new PersonaProvaider();
   final validarFoto = new Validar();
   final alertas = new Alertas();
@@ -26,15 +42,22 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
     return Scaffold(
       appBar: AppBar(
         title: Text("AppFaceApi"),
-        leading: Icon(Icons.face),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.photo_camera),
-            onPressed: _tomarFoto,
+            icon: Icon(Icons.photo_size_select_actual),
+            onPressed: _pickPhoto,
           ),
           IconButton(
-            icon: Icon(Icons.photo_size_select_actual),
-            onPressed: _seleccionarFoto,
+            icon: Icon(Icons.filter_list),
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AcceptedPeoplePage(),
+                )),
           ),
         ],
       ),
@@ -120,10 +143,10 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
     }
 
     if (foto != null) {
-      modeloPersona.url = await personaProvaider.subirImagen(foto);
+      person.url = await personaProvaider.subirImagen(foto);
     }
-    if (modeloPersona.url != null) {
-      final edad = await personaProvaider.enviarDatos(modeloPersona);
+    if (person.url != null) {
+      final edad = await personaProvaider.enviarDatos(person);
       print(edad);
       setState(() {
         _cargando = false;
@@ -133,9 +156,9 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
   }
 
   Widget _mostrarFoto() {
-    if (modeloPersona.url != null) {
+    if (person.url != null) {
       return FadeInImage(
-        image: NetworkImage(modeloPersona.url),
+        image: NetworkImage(person.url),
         placeholder: AssetImage('assets/jar-loading.gif'),
         height: 500.0,
         fit: BoxFit.cover,
@@ -146,27 +169,13 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
             fit: BoxFit.cover, height: 500.0, width: double.infinity);
       }
       return Container(child: Image.asset("assets/no-image.png"));
-      //return Image.asset('assets/no-image.png');
     }
   }
 
-  _tomarFoto() async {
-    setState(() {
-      procesarFoto(ImageSource.camera);
-    });
-  }
-
-  _seleccionarFoto() async {
-    procesarFoto(ImageSource.gallery);
-  }
-
-  procesarFoto(ImageSource origen) async {
-    foto = await ImagePicker.pickImage(source: origen, imageQuality: 50);
-
-    if (foto != null) {
-      modeloPersona.url = null;
-    }
-
+  _pickPhoto() async {
+    var picketPhoto = await _picker.getImage(source: ImageSource.gallery);
+    if (picketPhoto.path == "") return;
+    foto = File(picketPhoto.path);
     setState(() {});
   }
 }
