@@ -10,19 +10,18 @@ class PaginaInicio extends StatefulWidget {
 
 class _PaginaInicioState extends State<PaginaInicio> {
   int _selectedIndex = 0;
-  final _pages = [PaginaAnalizarFoto(),PaginaPersonasAceptadas()];
+  final _pages = [PaginaAnalizarFoto(), PaginaPersonasAceptadas()];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       bottomNavigationBar: BottomNavigationBar(
-          
-
+        bottomNavigationBar: BottomNavigationBar(
           selectedItemColor: Theme.of(context).primaryColor,
-          currentIndex: _selectedIndex, // this will be set when a new tab is tapped
+          currentIndex: _selectedIndex,
+          // this will be set when a new tab is tapped
           items: [
             BottomNavigationBarItem(
               icon: new Icon(Icons.home),
-            
               title: new Text('Inicio'),
             ),
             BottomNavigationBarItem(
@@ -35,13 +34,11 @@ class _PaginaInicioState extends State<PaginaInicio> {
           onTap: (int index) {
             setState(() {
               _selectedIndex = index;
-              
             });
           },
         ),
         body:
-        //Text("Hola")
-        _pages[_selectedIndex]
-        );
+            //Text("Hola")
+            _pages[_selectedIndex]);
   }
 }

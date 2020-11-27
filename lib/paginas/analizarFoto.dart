@@ -17,10 +17,11 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
   ModeloPersona modeloPersona = new ModeloPersona();
   final personaProvaider = new PersonaProvaider();
   final validarFoto = new Validar();
-  final alertas=new Alertas();
+  final alertas = new Alertas();
   final formkey = GlobalKey<FormState>();
   File foto;
   var _cargando = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,14 +101,12 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
         elevation: 0.0,
         color: Theme.of(context).primaryColor,
         textColor: Colors.white,
-      
-        
         onPressed: !_cargando ? () => _sumit() : null);
   }
 
   _sumit() async {
-    if(foto==null){
-     alertas.showAlertDialog(context);
+    if (foto == null) {
+      alertas.showAlertDialog(context);
       return;
     }
 
@@ -171,6 +170,4 @@ class _PaginaAnalizarFotoState extends State<PaginaAnalizarFoto> {
 
     setState(() {});
   }
-
-  
 }

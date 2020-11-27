@@ -14,9 +14,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: {
         'home': (BuildContext context) => PaginaInicio(),
-       'analizar':(BuildContext context)=>PaginaAnalizarFoto(),
-       'aceptadas':(BuildContext context)=>PaginaPersonasAceptadas()
-        },
+        'analizar': (BuildContext context) => PaginaAnalizarFoto(),
+        'aceptadas': (BuildContext context) => PaginaPersonasAceptadas()
+      },
     );
   }
 }

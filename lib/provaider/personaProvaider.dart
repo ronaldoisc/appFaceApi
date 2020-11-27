@@ -45,8 +45,7 @@ class PersonaProvaider {
     final response = await http.get(endPoint);
     if (response.statusCode == 200) {
       return modeloPersonaFromJson(response.body);
-    } else {
-      return null;
     }
+    return null;
   }
 }

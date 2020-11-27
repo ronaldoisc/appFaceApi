@@ -10,6 +10,7 @@ class PaginaPersonasAceptadas extends StatefulWidget {
 
 class _PaginaPersonasAceptadasState extends State<PaginaPersonasAceptadas> {
   final personaProvaider = new PersonaProvaider();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,13 +44,16 @@ class _ListaPersonas extends StatelessWidget {
               borderRadius: BorderRadius.circular(15.0),
               child: Column(
                 children: [
-                  Text("Edad: ${persona.age}    Genero: ${persona.gender=="male"?"masculino":"Femenino"}",style: TextStyle(fontSize: 20),),
+                  Text(
+                    "Edad: ${persona.age}    Genero: ${persona.gender == "male" ? "masculino" : "Femenino"}",
+                    style: TextStyle(fontSize: 20),
+                  ),
                   FadeInImage(
                     placeholder: AssetImage("assets/jar-loading.gif"),
                     image: NetworkImage(persona.url),
                     fit: BoxFit.cover,
                   ),
-               Padding(padding: EdgeInsets.only(bottom: 30)),
+                  Padding(padding: EdgeInsets.only(bottom: 30)),
                 ],
               ),
             ),
