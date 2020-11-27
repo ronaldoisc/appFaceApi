@@ -1,6 +1,5 @@
-import 'package:faceapi/paginas/analizarFoto.dart';
-import 'package:faceapi/paginas/home.dart';
-import 'package:faceapi/paginas/personasAceptadas.dart';
+import 'package:faceapi/pages/analizarFoto.dart';
+import 'package:faceapi/pages/home.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -13,9 +12,9 @@ class MyApp extends StatelessWidget {
       initialRoute: 'home',
       debugShowCheckedModeBanner: false,
       routes: {
-        'home': (BuildContext context) => PaginaInicio(),
+        'home': (BuildContext context) => HomePage(),
         'analizar': (BuildContext context) => PaginaAnalizarFoto(),
-        'aceptadas': (BuildContext context) => PaginaPersonasAceptadas()
+        // 'aceptadas': (BuildContext context) => PaginaPersonasAceptadas()
       },
     );
   }

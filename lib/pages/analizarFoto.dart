@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:faceapi/modelo/modeloPersona.dart';
 import 'package:faceapi/provaider/personaProvaider.dart';
 import 'package:faceapi/widgets/alertas.dart';
