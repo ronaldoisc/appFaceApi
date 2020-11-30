@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:faceapi/model/person.dart';
-import 'package:faceapi/modelo/modeloPersona.dart';
+
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:mime_type/mime_type.dart';
@@ -51,9 +51,7 @@ class PersonRepository {
       'gender': persona.gender
     });
     final decode = json.decode(response.body);
-    print("******");
-    print(decode);
-    print("******");
+    
     if (response.statusCode == 200) {
       return true;
     } else {
