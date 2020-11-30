@@ -25,15 +25,10 @@ class _AnalyzeImageState extends State<AnalyzeImage> {
   void initState() {
     super.initState();
     if (widget.imagePath != "") {
-<<<<<<< HEAD
-      foto = File(this.widget.imagePath);
-      setState(() {});
-=======
       foto = File(widget.imagePath);
       setState(() {
         foto = File(widget.imagePath);
       });
->>>>>>> 2950fc0202b2c2d3058413a9ef8eebd43d321d48
     }
   }
 
@@ -155,27 +150,12 @@ class _AnalyzeImageState extends State<AnalyzeImage> {
       person.url = await personaProvaider.uploadImage(foto);
     }
     if (person.url != null) {
-<<<<<<< HEAD
-      final respuesta = await personaProvaider.enviarDatos(person);
-     
-      setState(() {
-        _cargando = false;
-      });
-      
-      double edad=respuesta[0]["faceAttributes"]["age"];
-      String genero=respuesta[0]["faceAttributes"]["gender"];
-      person.age=edad;
-      person.gender=genero;
-       validarFoto.validarFoto(context, edad);
-     // personaProvaider.almacenarDatosPersona(person);
-=======
       final edad = await personaProvaider.sendData(person);
       print(edad);
       setState(() {
         _cargando = false;
       });
       validarFoto.validatePhoto(context, edad);
->>>>>>> 2950fc0202b2c2d3058413a9ef8eebd43d321d48
     }
   }
 

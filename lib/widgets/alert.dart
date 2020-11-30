@@ -1,15 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tts/tts.dart';
 
-<<<<<<< HEAD:lib/widgets/alertas.dart
-class Alertas {
-  void showDialogMessage(BuildContext context, IconData icono, Color color,
-      String title, double edad, subtitle) {
-=======
 class Alert {
   void showDialogMessage(BuildContext context, IconData icon, Color color,
       String title, int age, subTitle) {
->>>>>>> 2950fc0202b2c2d3058413a9ef8eebd43d321d48:lib/widgets/alert.dart
     showDialog(
       context: context,
       builder: (BuildContext context) {
