@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:camera/camera.dart';
 import 'package:faceapi/pages/analyze.dart';
@@ -23,7 +24,7 @@ class _HomePageState extends State<HomePage> {
 
   _initializeCamera() async{
     final cameras = await availableCameras();
-    _controller = CameraController(cameras.first, ResolutionPreset.high);
+    _controller = CameraController(cameras.first, ResolutionPreset.low);
     _initializeControllerFuture = _controller.initialize();
     setState(() {});
   }
@@ -57,25 +58,39 @@ class _HomePageState extends State<HomePage> {
         foregroundColor: Colors.purple,
         splashColor: Colors.white,
         backgroundColor: Colors.white,
-        onPressed: () async {
-          try {
-            await _initializeControllerFuture;
-            final path =
-            join((await getTemporaryDirectory()).path, '${DateTime.now()}');
-            await _controller.takePicture(path);
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AnalyzeImage(imagePath: path),
-                ));
-          } catch (e) {
-            print(e);
-          }
+        onPressed: ()  {
+          _takePicture(context);
         },
       ),
     );
   }
 
+  String timestamp() => DateTime.now().millisecondsSinceEpoch.toString();
+
+  _takePicture(context) async{
+    await _initializeControllerFuture;
+
+    final Directory extDir = await getApplicationDocumentsDirectory();
+    final String dirPath = '${extDir.path}/Pictures/appFaceApi';
+    await Directory(dirPath).create(recursive: true);
+
+    final String filePath = '$dirPath/${timestamp()}.jpg';
+
+    if(_controller.value.isTakingPicture) return null;
+
+    try {
+      await _controller.takePicture(filePath);
+    } on CameraException catch (e) {
+      print(e);
+      return null;
+    }
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AnalyzeImage(imagePath: filePath),
+        ));
+  }
   Widget rightAction() {
     return Align(
         alignment: FractionalOffset.bottomRight,

@@ -7,6 +7,7 @@ import 'package:faceapi/widgets/validate_photo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+
 ///articles/articles_repository.dart
 class AnalyzeImage extends StatefulWidget {
   final String imagePath;
@@ -25,7 +26,9 @@ class _AnalyzeImageState extends State<AnalyzeImage> {
     super.initState();
     if (widget.imagePath != "") {
       foto = File(widget.imagePath);
-      setState(() {});
+      setState(() {
+        foto = File(widget.imagePath);
+      });
     }
   }
 
@@ -86,11 +89,11 @@ class _AnalyzeImageState extends State<AnalyzeImage> {
     if (_cargando == true) {
       return Positioned.fill(
           child: Container(
-        child: Center(
-          child: CupertinoActivityIndicator(
-            radius: 15,
-          ),
-        ),
+            child: Center(
+              child: CupertinoActivityIndicator(
+                radius: 15,
+              ),
+            ),
       ));
     } else {
       return Container();
@@ -127,6 +130,7 @@ class _AnalyzeImageState extends State<AnalyzeImage> {
   }
 
   _sumit() async {
+    print(foto);
     if (foto == null) {
       alertas.showAlertDialog(context);
       return;
