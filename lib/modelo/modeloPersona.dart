@@ -15,7 +15,7 @@ class ModeloPersona {
 
     int id;
     String url=" ";
-    int age;
+    double age;
     String gender;
 
     factory ModeloPersona.fromJson(Map<String, dynamic> json) => ModeloPersona(

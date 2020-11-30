@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Validar {
   final alerta = new Alertas();
 
-  validarFoto(BuildContext context, int edad) {
+  validarFoto(BuildContext context, double edad) {
     if (edad >= 0 && edad <= 18) {
       alerta.showDialogMessage(context, Icons.error_outline, Colors.red,
           "Upps! Eres menor de edad :( ", edad, "¡no tienes acceso!");
