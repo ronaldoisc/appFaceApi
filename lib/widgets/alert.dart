@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tts/tts.dart';
 
-class Alertas {
-  void showDialogMessage(BuildContext context, IconData icono, Color color,
-      String title, int edad, subtitle) {
+class Alert {
+  void showDialogMessage(BuildContext context, IconData icon, Color color,
+      String title, int age, subTitle) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -11,14 +11,14 @@ class Alertas {
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Icon(icono, size: 100, color: color),
+              Icon(icon, size: 100, color: color),
               Text(
                 title,
                 style: TextStyle(fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              Text("Edad: " + edad.toString()),
-              Text(subtitle)
+              Text("Edad: " + age.toString()),
+              Text(subTitle)
             ],
           ),
           actions: <Widget>[
@@ -62,7 +62,7 @@ class Alertas {
         });
   }
 
-  speak(String texto) async {
-    Tts.speak(texto);
+  speak(String text) async {
+    Tts.speak(text);
   }
 }

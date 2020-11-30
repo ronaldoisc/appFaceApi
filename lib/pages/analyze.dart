@@ -1,13 +1,13 @@
 import 'dart:io';
-import 'package:faceapi/modelo/modeloPersona.dart';
-import 'package:faceapi/pages/personasAceptadas.dart';
-import 'package:faceapi/provaider/personaProvaider.dart';
-import 'package:faceapi/widgets/alertas.dart';
-import 'package:faceapi/widgets/validarFoto.dart';
+import 'package:faceapi/model/person.dart';
+import 'package:faceapi/pages/accepted_people.dart';
+import 'package:faceapi/repositories/person_repository.dart';
+import 'package:faceapi/widgets/alert.dart';
+import 'package:faceapi/widgets/validate_photo.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-
+///articles/articles_repository.dart
 class AnalyzeImage extends StatefulWidget {
   final String imagePath;
 
@@ -29,10 +29,10 @@ class _AnalyzeImageState extends State<AnalyzeImage> {
     }
   }
 
-  ModeloPersona person = new ModeloPersona();
-  final personaProvaider = new PersonaProvaider();
-  final validarFoto = new Validar();
-  final alertas = new Alertas();
+  Person person = new Person();
+  final personaProvaider = new PersonRepository();
+  final validarFoto = new Validate();
+  final alertas = new Alert();
   final formkey = GlobalKey<FormState>();
   File foto;
   var _cargando = false;
@@ -143,15 +143,15 @@ class _AnalyzeImageState extends State<AnalyzeImage> {
     }
 
     if (foto != null) {
-      person.url = await personaProvaider.subirImagen(foto);
+      person.url = await personaProvaider.uploadImage(foto);
     }
     if (person.url != null) {
-      final edad = await personaProvaider.enviarDatos(person);
+      final edad = await personaProvaider.sendData(person);
       print(edad);
       setState(() {
         _cargando = false;
       });
-      validarFoto.validarFoto(context, edad);
+      validarFoto.validatePhoto(context, edad);
     }
   }
 

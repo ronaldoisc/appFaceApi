@@ -1,5 +1,5 @@
 import 'package:faceapi/pages/analyze.dart';
-import 'package:faceapi/pages/personasAceptadas.dart';
+import 'package:faceapi/pages/accepted_people.dart';
 import 'package:flutter/material.dart';
 
 class Layout extends StatefulWidget {
@@ -22,6 +22,7 @@ class _LayoutState extends State<Layout> {
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
               label: 'Home',
+
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.thumb_up),

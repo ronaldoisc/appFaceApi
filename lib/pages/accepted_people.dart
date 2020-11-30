@@ -1,5 +1,5 @@
-import 'package:faceapi/modelo/modeloPersona.dart';
-import 'package:faceapi/provaider/personaProvaider.dart';
+import 'package:faceapi/model/person.dart';
+import 'package:faceapi/repositories/person_repository.dart';
 import 'package:flutter/material.dart';
 
 class AcceptedPeoplePage extends StatefulWidget {
@@ -9,13 +9,13 @@ class AcceptedPeoplePage extends StatefulWidget {
 }
 
 class _AcceptedPeoplePageState extends State<AcceptedPeoplePage> {
-  final personaProvaider = new PersonaProvaider();
+  final personProvider = new PersonRepository();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: FutureBuilder(
-          future: personaProvaider.obtenerPersonas(),
+          future: personProvider.getPeople(),
           builder: (BuildContext context, AsyncSnapshot<List> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(child: CircularProgressIndicator());
@@ -28,7 +28,7 @@ class _AcceptedPeoplePageState extends State<AcceptedPeoplePage> {
 }
 
 class _ListaPersonas extends StatelessWidget {
-  final List<ModeloPersona> personas;
+  final List<Person> personas;
 
   _ListaPersonas(this.personas);
 
