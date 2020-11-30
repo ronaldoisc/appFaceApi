@@ -55,7 +55,7 @@ class _AnalyzeImageState extends State<AnalyzeImage> {
             onPressed: _pickPhoto,
           ),
           IconButton(
-            icon: Icon(Icons.filter_list),
+            icon: Icon(Icons.list),
             onPressed: () => Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -155,9 +155,13 @@ class _AnalyzeImageState extends State<AnalyzeImage> {
       setState(() {
         _cargando = false;
       });
-      double edad=respuesta[0]["faceAttributes"]["age"];
-      //String genero=respuesta[0]["faceAttributes"]["gender"];
-      validarFoto.validatePhoto(context, edad);
+      int edad=respuesta[0]["faceAttributes"]["age"];
+      print(edad);
+      String genero=respuesta[0]["faceAttributes"]["gender"];
+      person.age=edad;
+      person.gender=genero;
+      validarFoto.validatePhoto(context, double.parse(edad.toString()));
+      personaProvaider.saveData(person);
 
     }
   }

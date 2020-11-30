@@ -29,7 +29,7 @@ class Person {
   Map<String, dynamic> toJson() => {
         "id": id,
         "url": url,
-        "age": age,
+        "age": age.toString(),
         "gender": gender,
       };
 }

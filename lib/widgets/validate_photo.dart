@@ -5,7 +5,7 @@ class Validate {
   final alert = new Alert();
 
   validatePhoto(BuildContext context, double edad) {
-    if (edad >= 0 && edad <= 18) {
+    if (edad >= 0 && edad < 18) {
       alert.showDialogMessage(context, Icons.error_outline, Colors.red,
           "Upps! Eres menor de edad :( ", edad, "¡no tienes acceso!");
 

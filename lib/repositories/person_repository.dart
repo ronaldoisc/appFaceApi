@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:faceapi/model/person.dart';
+import 'package:faceapi/modelo/modeloPersona.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:mime_type/mime_type.dart';
@@ -28,18 +29,36 @@ class PersonRepository {
   }
 
   Future<List> sendData(Person persona) async {
-    final endPoint="https://southcentralus.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=false&returnFaceAttributes=age,gender&recognitionModel=recognition_01&returnRecognitionModel=false&detectionModel=detection_01";
-   final response=await http.post(endPoint,
-    headers: {
-     'Content-Type':'application/json',
-     'Ocp-Apim-Subscription-Key': '4d7929702c5d4c7daf0fdb3b7c04ea96'
-   },
+    final endPoint =
+        "https://southcentralus.api.cognitive.microsoft.com/face/v1.0/detect?returnFaceId=true&returnFaceLandmarks=false&returnFaceAttributes=age,gender&recognitionModel=recognition_01&returnRecognitionModel=false&detectionModel=detection_01";
+    final response = await http.post(endPoint,
+        headers: {
+          'Content-Type': 'application/json',
+          'Ocp-Apim-Subscription-Key': '4d7929702c5d4c7daf0fdb3b7c04ea96'
+        },
+        body: jsonEncode({'url': persona.url}));
+    List parsed = json.decode(response.body);
+    if (response.statusCode == 200) {
+      return parsed;
+    }
+  }
 
-   body: jsonEncode({'url': persona.url}));
-   List parsed=json.decode(response.body);
-   if(response.statusCode==200){
-     return parsed;
-   }
+  Future<bool> saveData(Person persona) async {
+    final endPoint = "https://age-detector.herokuapp.com/";
+    final response = await http.post(endPoint, body: {
+      'url': persona.url,
+      'age': persona.age.toString(),
+      'gender': persona.gender
+    });
+    final decode = json.decode(response.body);
+    print("******");
+    print(decode);
+    print("******");
+    if (response.statusCode == 200) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   Future<List<Person>> getPeople() async {
