@@ -3,7 +3,7 @@ import 'package:tts/tts.dart';
 
 class Alert {
   void showDialogMessage(BuildContext context, IconData icon, Color color,
-      String title, int age, subTitle) {
+      String title, double age, subTitle) {
     showDialog(
       context: context,
       builder: (BuildContext context) {

@@ -150,12 +150,15 @@ class _AnalyzeImageState extends State<AnalyzeImage> {
       person.url = await personaProvaider.uploadImage(foto);
     }
     if (person.url != null) {
-      final edad = await personaProvaider.sendData(person);
-      print(edad);
+      final respuesta = await personaProvaider.sendData(person);
+     
       setState(() {
         _cargando = false;
       });
+      double edad=respuesta[0]["faceAttributes"]["age"];
+      //String genero=respuesta[0]["faceAttributes"]["gender"];
       validarFoto.validatePhoto(context, edad);
+
     }
   }
 
