@@ -51,7 +51,7 @@ class PersonRepository {
       'gender': persona.gender
     });
     final decode = json.decode(response.body);
-    
+    print(decode);
     if (response.statusCode == 200) {
       return true;
     } else {

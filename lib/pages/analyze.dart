@@ -155,13 +155,14 @@ class _AnalyzeImageState extends State<AnalyzeImage> {
       setState(() {
         _cargando = false;
       });
-      int edad=respuesta[0]["faceAttributes"]["age"];
-      print(edad);
+      double edad=respuesta[0]["faceAttributes"]["age"];
+      //int age=edad.toInt();
+    // print(age);
       String genero=respuesta[0]["faceAttributes"]["gender"];
       person.age=edad;
       person.gender=genero;
-      validarFoto.validatePhoto(context, double.parse(edad.toString()));
-      personaProvaider.saveData(person);
+      validarFoto.validatePhoto(context,edad);
+       personaProvaider.saveData(person);
 
     }
   }
