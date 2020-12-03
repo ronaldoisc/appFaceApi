@@ -45,7 +45,7 @@ class _ListaPersonas extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    "Edad: ${persona.age.toString()}    Genero: ${persona.gender == "male" ? "masculino" : "Femenino"}",
+                    "Edad: ${persona.age.toString()}    Género: ${persona.gender == "male" ? "masculino" : "Femenino"}",
                     style: TextStyle(fontSize: 20,color: Colors.black),
                   ),
                   FadeInImage(

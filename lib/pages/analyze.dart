@@ -44,7 +44,7 @@ class _AnalyzeImageState extends State<AnalyzeImage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("AppFaceApi"),
+        title: Text("AgeDetector"),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () => Navigator.pop(context),
