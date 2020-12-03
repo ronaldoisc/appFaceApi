@@ -24,6 +24,10 @@ dependencies:
     
   flutter:
     sdk: flutter
+  camera:
+  path_provider:
+  path:
+
 
 
 
